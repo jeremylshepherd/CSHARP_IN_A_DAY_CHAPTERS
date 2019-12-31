@@ -6,7 +6,12 @@ namespace CSHARP_IN_ONE_DAY_CHAPTERS
     {
         static void Main(string[] args)
         {
+
+            //A simple program to display the words Hello World
             Console.WriteLine("Hello World!");
+
+            //For Every Exercise
+            Console.Read();
         }
     }
 }
