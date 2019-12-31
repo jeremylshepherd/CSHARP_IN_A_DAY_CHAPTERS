@@ -12,96 +12,79 @@ namespace CSHARP_IN_ONE_DAY_CHAPTERS
         static void Main(string[] args)
         {
 
-            //Chapter 7: Object-Oriented pt.1
-            int pay;
+            //Chapter 08: Base/Derived Classes
+            NormalMember norm01 = new NormalMember("Special Rate", "James", 1, 2010);
+            VIPMember vip01 = new VIPMember("Andy", 2, 2011);
 
-            Staff staff1 = new Staff("Peter");
-            staff1.HoursWorked = 160;
-            pay = staff1.CalculatePay(1000, 400);
-            Console.WriteLine($"Pay = {pay:C}");
+            norm01.CalculateAnnualFee();
+            vip01.CalculateAnnualFee();
 
-            Staff staff2 = new Staff("Jane", "Lee");
-            staff2.HoursWorked = 120;
-            pay = staff2.CalculatePay();
-            Console.WriteLine($"Pay = {pay:C}");
-
-            Staff staff3 = new Staff("Carol");
-            staff3.HoursWorked = 0;
-            pay = staff3.CalculatePay();
-            Console.WriteLine($"Pay = {pay:C}");
-
-            Console.WriteLine(staff3.ToString());
+            Console.WriteLine(norm01.ToString());
+            Console.WriteLine(vip01.ToString());
 
             //For Every Exercise
             Console.Read();
         }
 
-
-        class Staff
+        //Base Class
+        class Member
         {
-            private string nameOfStaff;
-            private const int hourlyRate = 30;
-            private int hWorked;
+            protected int annualFee;
+            private string name;
+            private int memberID;
+            private int memberSince;
 
-            public Staff(string name)
+            public Member()
             {
-                nameOfStaff = name;
-                Console.WriteLine("\n" + nameOfStaff);
-                Console.WriteLine("-----------------------");
+                Console.WriteLine("Parent constructor with no parameter(s)");
             }
 
-            public Staff(string firstName, string lastName)
+            public Member(string pName, int pMemberID, int pMemberSince)
             {
-                nameOfStaff = $"{firstName} {lastName}";
-                Console.WriteLine("\n" + nameOfStaff);
-                Console.WriteLine("-----------------------");
-            }
+                Console.WriteLine("Parent constructor with 3 parameters");
 
-            public int HoursWorked
-            {
-                get
-                {
-                    return hWorked;
-                }
-                set
-                {
-                    if (value > 0)
-                        hWorked = value;
-                    else
-                        hWorked = 0;
-                }
-            }
-
-            public void PrintMessage()
-            {
-                Console.WriteLine("Calculating Pay...");
-            }
-
-            public int CalculatePay()
-            {
-                PrintMessage();
-                int staffPay;
-                staffPay = hWorked * hourlyRate;
-
-                if (hWorked > 0)
-                    return staffPay;
-                else
-                    return 0;
-            }
-
-            public int CalculatePay(int bonus, int allowance)
-            {
-                PrintMessage();
-
-                if (hWorked > 0)
-                    return hWorked * hourlyRate + bonus + allowance;
-                else
-                    return 0;
+                name = pName;
+                memberID = pMemberID;
+                memberSince = pMemberSince;
             }
 
             public override string ToString()
             {
-                return "Name of Staff = " + nameOfStaff + ", hourlyRate = " + hourlyRate + ", hWorked = " + hWorked;
+                return $"\nName: {name} \nMemberID: {memberID} \nMember Since: {memberSince} \nTotal Annual Fee: {annualFee:C}";
+            }
+        }
+
+        //Child Class
+        class NormalMember : Member
+        {
+            public NormalMember()
+            {
+                Console.WriteLine("Child constructor with no parameter");
+            }
+
+            public NormalMember(string remarks, string name, int memberID, int memberSince) : base(name, memberID, memberSince)
+            {
+                Console.WriteLine("Child constructor with 4 parameters");
+                Console.WriteLine($"Remarks = {remarks}");
+            }
+
+            public void CalculateAnnualFee()
+            {
+                annualFee = 100 + 12 * 30;
+            }
+        }
+
+        //Child Class
+        class VIPMember : Member
+        {
+            public VIPMember(string name, int memberID, int memberSince) : base(name, memberID, memberSince)
+            {
+                Console.WriteLine("Child constructor with 3 parameters");
+            }
+
+            public void CalculateAnnualFee()
+            {
+                annualFee = 1200;
             }
         }
 
