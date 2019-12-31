@@ -12,52 +12,48 @@ namespace CSHARP_IN_ONE_DAY_CHAPTERS
         static void Main(string[] args)
         {
 
-            //Chapter 08: Abstract Classes
+            //Chapter 11
+            string readPath = "/Users/jeremyshepherd/Projects/ASPdotNET/CSHARP_IN_ONE_DAY_CHAPTERS/CSHARP_IN_ONE_DAY_CHAPTERS/myReadFile.txt",
+                writePath = "/Users/jeremyshepherd/Projects/ASPdotNET/CSHARP_IN_ONE_DAY_CHAPTERS/CSHARP_IN_ONE_DAY_CHAPTERS/myWriteFile.txt";
+            if (File.Exists(readPath))
+            {
+                using (StreamReader sr = new StreamReader(readPath))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        Console.WriteLine(sr.ReadLine());
+                    }
 
-            ClassA a = new ClassA();
+                    sr.Close();
+                }
+            }
+            else
+                Console.WriteLine("File does not exist");
 
-            a.MyNumber = 5;
-            a.InterfaceMethod();
+            using (StreamWriter sw = new StreamWriter(writePath, true))
+            {
+                sw.WriteLine("Writing First Line");
+                sw.WriteLine("Writing Second Line");
+                sw.WriteLine("Writing Final Line");
+                sw.Close();
+            }
+
+            if (File.Exists(writePath))
+            {
+                using (StreamReader sr = new StreamReader(writePath))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        Console.WriteLine(sr.ReadLine());
+                    }
+
+                    sr.Close();
+                }
+            }
 
             //For Every Exercise
             Console.Read();
         }
-
-        //Interfaces
-        interface IShape
-        {
-            int MyNumber
-            {
-                get;
-                set;
-            }
-
-            void InterfaceMethod();
-        }
-
-        class ClassA : IShape
-        {
-            private int myNumber;
-            public int MyNumber
-            {
-                get
-                {
-                    return myNumber;
-                }
-                set
-                {
-                    if (value < 0)
-                        myNumber = 0;
-                    else
-                        myNumber = value;
-                }
-            }
-
-            public void InterfaceMethod()
-            {
-                Console.WriteLine("The number is {0}.", MyNumber);
-            }
-        }
-
+        
     }
 }
