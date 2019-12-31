@@ -12,89 +12,35 @@ namespace CSHARP_IN_ONE_DAY_CHAPTERS
         static void Main(string[] args)
         {
 
-            //Chapter 08: Polymorphism
-            Member[] clubMembers = new Member[5];
+            //Chapter 08: Abstract Classes
 
-            clubMembers[0] = new NormalMember("Special Rate", "James", 1, 2010);
-            clubMembers[1] = new NormalMember("Normal Rate", "Andy", 2, 2011);
-            clubMembers[2] = new NormalMember("Normal Rate", "Bill", 3, 2011);
-            clubMembers[3] = new VIPMember("Carol", 4, 2012);
-            clubMembers[4] = new VIPMember("Evelyn", 5, 2012);
-
-            foreach (Member m in clubMembers)
-            {
-                m.CalculateAnnualFee();
-                Console.WriteLine(m.ToString());
-            }
+            //MyAbstractClass abClass = new MyAbstractClass();  //Abstract Classes throw exception if instantiated, here for demonstration
+            ClassA a = new ClassA();
+            a.PrintMessage();
+            a.PrintMessageAbstract();
 
             //For Every Exercise
             Console.Read();
         }
 
-        //Base Class
-        class Member
+        //Abstract Classes
+
+        abstract class MyAbstractClass
         {
-            protected int annualFee;
-            private string name;
-            private int memberID;
-            private int memberSince;
-
-            public Member()
+            private string message = "Hello C#";
+            public void PrintMessage()
             {
-                Console.WriteLine("Parent constructor with no parameter(s)");
+                Console.WriteLine(message);
             }
 
-            public Member(string pName, int pMemberID, int pMemberSince)
-            {
-                Console.WriteLine("Parent constructor with 3 parameters");
-
-                name = pName;
-                memberID = pMemberID;
-                memberSince = pMemberSince;
-            }
-
-            public virtual void CalculateAnnualFee()
-            {
-                annualFee = 0;
-            }
-
-            public override string ToString()
-            {
-                return $"\nName: {name} \nMemberID: {memberID} \nMember Since: {memberSince} \nTotal Annual Fee: {annualFee:C}";
-            }
+            public abstract void PrintMessageAbstract();
         }
 
-        //Child Class
-        class NormalMember : Member
+        class ClassA : MyAbstractClass
         {
-            public NormalMember()
+            public override void PrintMessageAbstract()
             {
-                Console.WriteLine("Child constructor with no parameter");
-            }
-
-            public NormalMember(string remarks, string name, int memberID, int memberSince) : base(name, memberID, memberSince)
-            {
-                Console.WriteLine("Child constructor with 4 parameters");
-                Console.WriteLine($"Remarks = {remarks}");
-            }
-
-            public override void CalculateAnnualFee()
-            {
-                annualFee = 100 + 12 * 30;
-            }
-        }
-
-        //Child Class
-        class VIPMember : Member
-        {
-            public VIPMember(string name, int memberID, int memberSince) : base(name, memberID, memberSince)
-            {
-                Console.WriteLine("Child constructor with 3 parameters");
-            }
-
-            public override void CalculateAnnualFee()
-            {
-                annualFee = 1200;
+                Console.WriteLine("C# is fun!");
             }
         }
 
