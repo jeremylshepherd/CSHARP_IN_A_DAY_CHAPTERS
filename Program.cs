@@ -12,15 +12,20 @@ namespace CSHARP_IN_ONE_DAY_CHAPTERS
         static void Main(string[] args)
         {
 
-            //Chapter 08: Base/Derived Classes
-            NormalMember norm01 = new NormalMember("Special Rate", "James", 1, 2010);
-            VIPMember vip01 = new VIPMember("Andy", 2, 2011);
+            //Chapter 08: Polymorphism
+            Member[] clubMembers = new Member[5];
 
-            norm01.CalculateAnnualFee();
-            vip01.CalculateAnnualFee();
+            clubMembers[0] = new NormalMember("Special Rate", "James", 1, 2010);
+            clubMembers[1] = new NormalMember("Normal Rate", "Andy", 2, 2011);
+            clubMembers[2] = new NormalMember("Normal Rate", "Bill", 3, 2011);
+            clubMembers[3] = new VIPMember("Carol", 4, 2012);
+            clubMembers[4] = new VIPMember("Evelyn", 5, 2012);
 
-            Console.WriteLine(norm01.ToString());
-            Console.WriteLine(vip01.ToString());
+            foreach (Member m in clubMembers)
+            {
+                m.CalculateAnnualFee();
+                Console.WriteLine(m.ToString());
+            }
 
             //For Every Exercise
             Console.Read();
@@ -48,6 +53,11 @@ namespace CSHARP_IN_ONE_DAY_CHAPTERS
                 memberSince = pMemberSince;
             }
 
+            public virtual void CalculateAnnualFee()
+            {
+                annualFee = 0;
+            }
+
             public override string ToString()
             {
                 return $"\nName: {name} \nMemberID: {memberID} \nMember Since: {memberSince} \nTotal Annual Fee: {annualFee:C}";
@@ -68,7 +78,7 @@ namespace CSHARP_IN_ONE_DAY_CHAPTERS
                 Console.WriteLine($"Remarks = {remarks}");
             }
 
-            public void CalculateAnnualFee()
+            public override void CalculateAnnualFee()
             {
                 annualFee = 100 + 12 * 30;
             }
@@ -82,7 +92,7 @@ namespace CSHARP_IN_ONE_DAY_CHAPTERS
                 Console.WriteLine("Child constructor with 3 parameters");
             }
 
-            public void CalculateAnnualFee()
+            public override void CalculateAnnualFee()
             {
                 annualFee = 1200;
             }
