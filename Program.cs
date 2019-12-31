@@ -12,31 +12,98 @@ namespace CSHARP_IN_ONE_DAY_CHAPTERS
         static void Main(string[] args)
         {
 
-            //Try Catch Finally - Error Handling Demonstration.
-            int choice = 0;
+            //Chapter 7: Object-Oriented pt.1
+            int pay;
 
-            int[] numbers = { 10, 11, 12, 13, 14, 15 };
-            Console.Write("Please enter the index of the array: ");
-            try
-            {
-                choice = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("numbers[{0}] = {1}", choice, numbers[choice]);
-            }
-            catch (IndexOutOfRangeException)
-            {
-                Console.WriteLine("Error: Index should be from 0 to 5.");
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Error: You did not enter an integer.");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            Staff staff1 = new Staff("Peter");
+            staff1.HoursWorked = 160;
+            pay = staff1.CalculatePay(1000, 400);
+            Console.WriteLine($"Pay = {pay:C}");
+
+            Staff staff2 = new Staff("Jane", "Lee");
+            staff2.HoursWorked = 120;
+            pay = staff2.CalculatePay();
+            Console.WriteLine($"Pay = {pay:C}");
+
+            Staff staff3 = new Staff("Carol");
+            staff3.HoursWorked = 0;
+            pay = staff3.CalculatePay();
+            Console.WriteLine($"Pay = {pay:C}");
+
+            Console.WriteLine(staff3.ToString());
 
             //For Every Exercise
             Console.Read();
         }
+
+
+        class Staff
+        {
+            private string nameOfStaff;
+            private const int hourlyRate = 30;
+            private int hWorked;
+
+            public Staff(string name)
+            {
+                nameOfStaff = name;
+                Console.WriteLine("\n" + nameOfStaff);
+                Console.WriteLine("-----------------------");
+            }
+
+            public Staff(string firstName, string lastName)
+            {
+                nameOfStaff = $"{firstName} {lastName}";
+                Console.WriteLine("\n" + nameOfStaff);
+                Console.WriteLine("-----------------------");
+            }
+
+            public int HoursWorked
+            {
+                get
+                {
+                    return hWorked;
+                }
+                set
+                {
+                    if (value > 0)
+                        hWorked = value;
+                    else
+                        hWorked = 0;
+                }
+            }
+
+            public void PrintMessage()
+            {
+                Console.WriteLine("Calculating Pay...");
+            }
+
+            public int CalculatePay()
+            {
+                PrintMessage();
+                int staffPay;
+                staffPay = hWorked * hourlyRate;
+
+                if (hWorked > 0)
+                    return staffPay;
+                else
+                    return 0;
+            }
+
+            public int CalculatePay(int bonus, int allowance)
+            {
+                PrintMessage();
+
+                if (hWorked > 0)
+                    return hWorked * hourlyRate + bonus + allowance;
+                else
+                    return 0;
+            }
+
+            public override string ToString()
+            {
+                return "Name of Staff = " + nameOfStaff + ", hourlyRate = " + hourlyRate + ", hWorked = " + hWorked;
+            }
+        }
+
     }
 }
